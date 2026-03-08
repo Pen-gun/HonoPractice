@@ -46,6 +46,19 @@ app.put('/users/:id', async (c) => {
     return c.json(users[userIndex]);
 });
 
+//delete user
+app.delete('/users/:id', (c) => {
+    const { id } = c.req.param();
+    users = users.filter(u => u.id !== id);
+    return c.json({ message: 'User deleted' });
+});
+
+//delete all users
+app.delete('/users', (c) => {
+    users = [];
+    return c.json({ message: 'All users deleted' });
+});
+
 serve({
   fetch: app.fetch,
   port: 3000
