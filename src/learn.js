@@ -34,6 +34,17 @@ app.get('/users/:id', (c) => {
     }
     return c.json(user);
 });
+//update user
+app.put('/users/:id', async (c) => {
+    const { id } = c.req.param();
+    const { name, email } = await c.req.json();
+    const userIndex = users.findIndex(u => u.id === id);
+    if (userIndex === -1) {
+        return c.json({ error: 'User not found' }, 404);
+    }
+    users[userIndex] = { ...users[userIndex], name, email };
+    return c.json(users[userIndex]);
+});
 
 serve({
   fetch: app.fetch,
