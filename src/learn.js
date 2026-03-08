@@ -26,6 +26,15 @@ app.get('/users', (c) => {
     });
 });
 
+app.get('/users/:id', (c) => {
+    const { id } = c.req.param();
+    const user = users.find(u => u.id === id);
+    if(!user) {
+        return c.json({ error: 'User not found' }, 404);
+    }
+    return c.json(user);
+});
+
 serve({
   fetch: app.fetch,
   port: 3000
